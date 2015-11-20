@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-source /env.sh
+source env.sh
 
 # Code gen
 # ... all magic happens here ...
-/nildev io --sourceDir=$pkgPathService
-/nildev r --services=$pkgNameService --containerDir=$pkgPathContainer
+nildev io --sourceDir=$pkgPathService
+nildev r --services=$pkgNameService --containerDir=$pkgPathContainer
 
 cat /go/src/bitbucket.org/nildev/blackhole/gen/gen_init.go
 
