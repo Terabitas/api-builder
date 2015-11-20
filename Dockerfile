@@ -1,17 +1,28 @@
-FROM golang:latest
-MAINTAINER nildev <steelzz@nildev.io>
+#!/bin/bash
 
-RUN apt-get update && apt-get install -y upx-ucl
-# Install Docker binary
-RUN wget -nv https://get.docker.com/builds/Linux/x86_64/docker-1.3.3 -O /usr/bin/docker && \
-  chmod +x /usr/bin/docker
-RUN go get github.com/pwaller/goupx
-RUN go get github.com/tools/godep
-RUN go get bitbucket.org/nildev/tools/cmd/nildev
+serviceToBuild="$1"
+containerToBuild="$2"
+tagName="$3"
 
-WORKDIR /go/src
+# Grab just first path listed in GOPATH
+goPath="${GOPATH%%:*}"
 
-COPY env.sh /
-COPY build.sh /
+# For private repos
+#git config --global url."git@bitbucket.org:".insteadOf "https://bitbucket.org/"
+git config --global user.email "go@nildev.io"
+git config --global user.name "nildev"
 
-ENTRYPOINT ["/build.sh"]
+# Construct Go package path
+pkgPathService="$goPath/src/$1"
+pkgPathContainer="$goPath/src/$2"
+
+# Fetch service to build
+echo "Get $1"
+go get -d $1
+cd $pkgPathService
+/go/bin/godep restore
+
+echo "Get $2"
+go get -d $2
+cd $pkgPathContainer
+/go/bin/godep restore
