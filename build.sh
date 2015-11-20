@@ -4,10 +4,8 @@ source env.sh
 
 # Code gen
 # ... all magic happens here ...
-nildev io --sourceDir=$pkgPathService
-nildev r --services=$pkgNameService --containerDir=$pkgPathContainer
-
-cat /go/src/bitbucket.org/nildev/blackhole/gen/gen_init.go
+/go/bin/nildev io --sourceDir=$pkgPathService
+/go/bin/nildev r --services=$pkgNameService --containerDir=$pkgPathContainer
 
 # Compile statically linked version of package
 echo "Building $pkgNameService within $pkgNameContainer"

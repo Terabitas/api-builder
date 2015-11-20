@@ -13,9 +13,6 @@ RUN go get -d bitbucket.org/nildev/lib
 VOLUME /src/service /src/container
 WORKDIR /src
 
-# Move to go get once public
-COPY nildev /
-
 COPY env.sh /
 COPY build.sh /
 
