@@ -8,11 +8,13 @@ RUN wget -nv https://get.docker.com/builds/Linux/x86_64/docker-1.3.3 -O /usr/bin
 RUN go get github.com/pwaller/goupx
 RUN go get github.com/tools/godep
 RUN go get golang.org/x/tools/cmd/goimports
-RUN go get bitbucket.org/nildev/tools/cmd/nildev
+RUN go get github.com/nildev/tools/cmd/nildev
 
 WORKDIR /go/src
 
 COPY env.sh /
 COPY build.sh /
+
+VOLUME ["/src"]
 
 ENTRYPOINT ["/build.sh"]
