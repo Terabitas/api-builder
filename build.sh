@@ -14,9 +14,9 @@ cat gen_init.go
 
 /go/bin/nildev r --services=$1 --containerDir=$pkgPathContainer
 cd $pkgPathContainer
-git add .
 /go/bin/godep save -r ./...
 /go/bin/goimports -w ./gen
+git add .
 git commit -a -m"Auto"
 cat gen/gen_init.go
 
