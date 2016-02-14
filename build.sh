@@ -6,17 +6,21 @@ source /env.sh
 # ... all magic happens here ...
 /go/bin/nildev io --sourceDir=$pkgPathService
 cd $pkgPathService
+git add --all .
+git commit -m"Auto"
 /go/bin/godep save -r ./...
 /go/bin/goimports -w .
-git add .
+git add --all .
 git commit -m"Auto"
 cat gen_init.go
 
 /go/bin/nildev r --services=$1 --containerDir=$pkgPathContainer
 cd $pkgPathContainer
+git add --all .
+git commit -m"Auto"
 /go/bin/godep save -r ./...
 /go/bin/goimports -w ./gen
-git add .
+git add --all .
 git commit -a -m"Auto"
 cat gen/gen_init.go
 
@@ -24,7 +28,8 @@ cat gen/gen_init.go
 echo "Building [$1] within [$2]"
 
 cd $pkgPathContainer
-`CGO_ENABLED=${CGO_ENABLED:-0} go build -a --installsuffix cgo --ldflags="${LDFLAGS:--s}" $2`
+
+CGO_ENABLED=0 go build -a --installsuffix cgo -ldflags "-s -X main.Version=`git rev-parse --abbrev-ref HEAD` -X main.GitHash=`git rev-parse HEAD` -X main.BuiltTimestamp=`date -u '+%Y-%m-%d_%I:%M:%S%p'`" $2
 
 # Grab the last segment from the package name
 name=${1##*/}
