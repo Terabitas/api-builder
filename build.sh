@@ -8,7 +8,7 @@ source /env.sh
 cd $pkgPathService
 git add --all .
 git commit -m"Auto"
-/go/bin/godep save -r ./...
+/go/bin/godep save ./...
 /go/bin/goimports -w .
 git add --all .
 git commit -m"Auto"
@@ -18,7 +18,7 @@ cat gen_init.go
 cd $pkgPathContainer
 git add --all .
 git commit -m"Auto"
-/go/bin/godep save -r ./...
+/go/bin/godep save ./...
 /go/bin/goimports -w ./gen
 git add --all .
 git commit -a -m"Auto"
