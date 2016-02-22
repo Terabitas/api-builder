@@ -1,11 +1,12 @@
 #!/bin/bash -e
-
+# ./build.sh github.com/nildev/authx github.com/nildev/api-host github.com/nildev/authx:latest
 source /env.sh
 
 # Code gen
 # ... all magic happens here ...
 /go/bin/nildev io --sourceDir=$pkgPathService
 cd $pkgPathService
+git init
 git add --all .
 git commit -m"Auto"
 /go/bin/godep save ./...
@@ -16,6 +17,7 @@ cat gen_init.go
 
 /go/bin/nildev r --services=$1 --containerDir=$pkgPathContainer
 cd $pkgPathContainer
+git init
 git add --all .
 git commit -m"Auto"
 /go/bin/godep save ./...

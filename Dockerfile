@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.6
 MAINTAINER nildev <steelzz@nildev.io>
 
 RUN apt-get update && apt-get install -y upx-ucl nano
